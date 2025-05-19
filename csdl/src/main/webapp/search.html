@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="vi" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm kiếm khách sạn & phòng - RBook</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="custom.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-hotel me-2"></i>RBook
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-home me-1"></i> Trang Chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="fas fa-search me-1"></i> Tìm Kiếm
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+	
+    <!-- Main Content -->
+    <div class="container mb-5">
+        <div class="mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Tìm kiếm</li>
+                </ol>
+            </nav>
+        </div>
+
+		<div class="card border-0 shadow mb-5">
+            <div class="card-body p-4">
+                <form id="searchForm" class="row g-3" action="search.html" method="get">
+                    <div class="col-md-3">
+                        <label for="location" class="form-label">Nơi ở</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            <input type="text" class="form-control" id="location" name="location" placeholder="Tất cả địa điểm">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="checkInDate" class="form-label">Ngày Nhận Phòng</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            <input type="date" class="form-control" id="checkInDate" name="check_in">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="checkOutDate" class="form-label">Ngày Trả Phòng</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            <input type="date" class="form-control" id="checkOutDate" name="check_out">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="guests" class="form-label">Số khách</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <select class="form-select" id="guests" name="guests">
+                                <option value="1">1 khách</option>
+                                <option value="2" selected>2 khách</option>
+                                <option value="3">3 khách</option>
+                                <option value="4">4 khách</option>
+                                <option value="5">5 khách</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search"></i> Tìm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+		
+        <div class="row">
+            <!-- Filters Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="card border-0 shadow sticky-top" style="top: 2rem">
+                    <div class="card-body p-4">
+                        <h2 class="h5 mb-4">Bộ lọc tìm kiếm</h2>
+                        <form id="filterForm">
+                            <!-- Price Range Filter -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-3">Khoảng giá (VNĐ/đêm)</h6>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input price-filter" type="checkbox" value="0-1000000" id="price1">
+                                        <label class="form-check-label" for="price1">Dưới 1.000.000đ</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input price-filter" type="checkbox" value="1000000-2000000" id="price2">
+                                        <label class="form-check-label" for="price2">1.000.000đ - 2.000.000đ</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input price-filter" type="checkbox" value="2000000-3000000" id="price3">
+                                        <label class="form-check-label" for="price3">2.000.000đ - 3.000.000đ</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input price-filter" type="checkbox" value="3000000-5000000" id="price4">
+                                        <label class="form-check-label" for="price4">3.000.000đ - 5.000.000đ</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input price-filter" type="checkbox" value="5000000-0" id="price5">
+                                        <label class="form-check-label" for="price5">Trên 5.000.000đ</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Room Features Filter -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-3">Tiện nghi phòng</h6>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input feature-filter" type="checkbox" value="wifi" id="feature1">
+                                        <label class="form-check-label" for="feature1">WiFi miễn phí</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input feature-filter" type="checkbox" value="breakfast" id="feature2">
+                                        <label class="form-check-label" for="feature2">Bao gồm bữa sáng</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input feature-filter" type="checkbox" value="aircon" id="feature3">
+                                        <label class="form-check-label" for="feature3">Máy điều hòa</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input feature-filter" type="checkbox" value="bathtub" id="feature4">
+                                        <label class="form-check-label" for="feature4">Bồn tắm</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input feature-filter" type="checkbox" value="balcony" id="feature5">
+                                        <label class="form-check-label" for="feature5">Ban công</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input feature-filter" type="checkbox" value="pool" id="feature6">
+                                        <label class="form-check-label" for="feature6">Bể bơi</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input feature-filter" type="checkbox" value="tv" id="feature7">
+                                        <label class="form-check-label" for="feature7">TV màn hình phẳng</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Bed Type Filter -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-3">Loại giường</h6>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input bed-filter" type="checkbox" value="single" id="bed1">
+                                        <label class="form-check-label" for="bed1">Giường đơn</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input bed-filter" type="checkbox" value="double" id="bed2">
+                                        <label class="form-check-label" for="bed2">Giường đôi</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input bed-filter" type="checkbox" value="queen" id="bed3">
+                                        <label class="form-check-label" for="bed3">Giường Queen size</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input bed-filter" type="checkbox" value="king" id="bed4">
+                                        <label class="form-check-label" for="bed4">Giường King size</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input bed-filter" type="checkbox" value="twin" id="bed5">
+                                        <label class="form-check-label" for="bed5">Hai giường đơn</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Room Capacity Filter -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-3">Sức chứa</h6>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input capacity-filter" type="checkbox" value="1" id="capacity1">
+                                        <label class="form-check-label" for="capacity1">1 người</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input capacity-filter" type="checkbox" value="2" id="capacity2">
+                                        <label class="form-check-label" for="capacity2">2 người</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input capacity-filter" type="checkbox" value="3" id="capacity3">
+                                        <label class="form-check-label" for="capacity3">3 người</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input capacity-filter" type="checkbox" value="4" id="capacity4">
+                                        <label class="form-check-label" for="capacity4">4 người</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input capacity-filter" type="checkbox" value="5" id="capacity5">
+                                        <label class="form-check-label" for="capacity5">5+ người</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2">
+                                <i class="fas fa-filter"></i> Áp dụng bộ lọc
+                            </button>
+                            <button type="button" id="resetFilters" class="btn btn-outline-secondary w-100 mt-2 d-flex justify-content-center align-items-center gap-2">
+                                <i class="fas fa-redo"></i> Xóa bộ lọc
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Search Results -->
+            <div class="col-lg-9">
+                <!-- Search Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3">Kết quả tìm kiếm</h1>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">Sắp xếp theo:</span>
+                        <select class="form-select form-select-sm" id="sortBy" style="width: auto;">
+                            <option value="price_asc">Giá: thấp đến cao</option>
+                            <option value="price_desc">Giá: cao đến thấp</option>
+                            <option value="rating_desc">Xếp hạng: cao nhất trước</option>
+                            <option value="name_asc">Tên: A-Z</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Search Results Container -->
+                <div id="searchResults">
+                    <!-- Results Count -->
+                    <div class="alert alert-light border mb-4" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <span id="resultsCount">3</span> kết quả phù hợp với tiêu chí tìm kiếm của bạn
+                    </div>
+                    <!-- Results List -->
+                    <div id="resultsList">
+                        <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="ratio ratio-4x3 h-100">
+                                        <img src="https://placehold.co/600x400?text=Room+Image+1" class="img-fluid rounded-start" alt="Phòng Deluxe Hướng Biển" style="object-fit: cover;">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <h5 class="card-title mb-1">Phòng Deluxe Hướng Biển</h5>
+                                                <p class="card-subtitle mb-2">
+                                                    <a href="#" class="text-decoration-none text-dark">Khách Sạn Biển Xanh</a>
+                                                    <span class="text-muted ms-2"><i class="fas fa-map-marker-alt me-1"></i>Đà Nẵng, Việt Nam</span>
+                                                </p>
+                                            </div>
+                                            <div class="text-end">
+                                                <div class="h5 mb-0 text-primary">2,500,000 đ</div>
+                                                <small class="text-muted">một đêm</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mb-3">
+                                            <div class="me-3"><i class="fas fa-bed text-primary me-1"></i> Giường King</div>
+                                            <div class="me-3"><i class="fas fa-user-friends text-primary me-1"></i> 2 khách</div>
+                                            <div><i class="fas fa-expand-arrows-alt text-primary me-1"></i> 35 m²</div>
+                                        </div>
+                                        <p class="card-text mb-3">Phòng Deluxe Hướng Biển rộng rãi với ban công riêng, tầm nhìn tuyệt đẹp...</p>
+                                        <div class="d-flex flex-wrap mb-3">
+                                            <span class="badge bg-light text-dark border me-1 mb-1">WiFi miễn phí</span>
+                                            <span class="badge bg-light text-dark border me-1 mb-1">Máy điều hòa</span>
+                                            <span class="badge bg-light text-dark border me-1 mb-1">Ban công</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <div class="small">
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star-half-alt text-warning"></i>
+                                                <i class="far fa-star text-warning"></i>
+                                                <small class="text-muted ms-1">(3.5)</small>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                                <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-check-circle me-1"></i> Đặt ngay</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="ratio ratio-4x3 h-100">
+                                        <img src="https://placehold.co/600x400?text=Room+Image+2" class="img-fluid rounded-start" alt="Phòng Superior" style="object-fit: cover;">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <h5 class="card-title mb-1">Phòng Superior</h5>
+                                                <p class="card-subtitle mb-2">
+                                                    <a href="#" class="text-decoration-none text-dark">Khách Sạn Hoàng Gia</a>
+                                                    <span class="text-muted ms-2"><i class="fas fa-map-marker-alt me-1"></i>Hà Nội, Việt Nam</span>
+                                                </p>
+                                            </div>
+                                            <div class="text-end">
+                                                <div class="h5 mb-0 text-primary">1,800,000 đ</div>
+                                                <small class="text-muted">một đêm</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mb-3">
+                                            <div class="me-3"><i class="fas fa-bed text-primary me-1"></i> Giường Queen</div>
+                                            <div class="me-3"><i class="fas fa-user-friends text-primary me-1"></i> 2 khách</div>
+                                            <div><i class="fas fa-expand-arrows-alt text-primary me-1"></i> 30 m²</div>
+                                        </div>
+                                        <p class="card-text mb-3">Phòng Superior tiện nghi với không gian ấm cúng và đầy đủ tiện ích...</p>
+                                        <div class="d-flex flex-wrap mb-3">
+                                            <span class="badge bg-light text-dark border me-1 mb-1">WiFi miễn phí</span>
+                                            <span class="badge bg-light text-dark border me-1 mb-1">Bao gồm bữa sáng</span>
+                                            <span class="badge bg-light text-dark border me-1 mb-1">TV màn hình phẳng</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <div class="small">
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="far fa-star text-warning"></i>
+                                                <small class="text-muted ms-1">(4.0)</small>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                                <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-check-circle me-1"></i> Đặt ngay</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="ratio ratio-4x3 h-100">
+                                        <img src="https://placehold.co/600x400?text=Room+Image+3" class="img-fluid rounded-start" alt="Phòng Suite" style="object-fit: cover;">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <h5 class="card-title mb-1">Phòng Suite</h5>
+                                                <p class="card-subtitle mb-2">
+                                                    <a href="#" class="text-decoration-none text-dark">Khách Sạn Sài Gòn</a>
+                                                    <span class="text-muted ms-2"><i class="fas fa-map-marker-alt me-1"></i>TP. Hồ Chí Minh, Việt Nam</span>
+                                                </p>
+                                            </div>
+                                            <div class="text-end">
+                                                <div class="h5 mb-0 text-primary">3,200,000 đ</div>
+                                                <small class="text-muted">một đêm</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mb-3">
+                                            <div class="me-3"><i class="fas fa-bed text-primary me-1"></i> Giường King</div>
+                                            <div class="me-3"><i class="fas fa-user-friends text-primary me-1"></i> 3 khách</div>
+                                            <div><i class="fas fa-expand-arrows-alt text-primary me-1"></i> 45 m²</div>
+                                        </div>
+                                        <p class="card-text mb-3">Phòng Suite sang trọng với nội thất cao cấp và không gian rộng rãi...</p>
+                                        <div class="d-flex flex-wrap mb-3">
+                                            <span class="badge bg-light text-dark border me-1 mb-1">WiFi miễn phí</span>
+                                            <span class="badge bg-light text-dark border me-1 mb-1">Bồn tắm</span>
+                                            <span class="badge bg-light text-dark border me-1 mb-1">Bể bơi</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <div class="small">
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star text-warning"></i>
+                                                <i class="fas fa-star-half-alt text-warning"></i>
+                                                <small class="text-muted ms-1">(4.5)</small>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                                <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-check-circle me-1"></i> Đặt ngay</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>RBook</h5>
+                    <p>Trang web đặt phòng khách sạn hàng đầu.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Liên Hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i><a href="mailto:support@rbook.com">support@rbook.com</a></li>
+                        <li><i class="fas fa-phone me-2"></i>+84 123 456 789</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Theo Dõi</h5>
+                    <div class="d-flex gap-3 fs-4">
+                        <a href="#" class="text-light"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">© 2025 RBook. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript -->
+    <script>
+ // Hardcoded room data
+    const roomData = [
+        {
+            id: 1,
+            name: "Phòng Deluxe Hướng Biển",
+            price_per_night: 2500000,
+            description: "Phòng Deluxe Hướng Biển rộng rãi với ban công riêng, tầm nhìn tuyệt đẹp ra biển.",
+            hotel: { id: 1, name: "Khách Sạn Biển Xanh", location: "Đà Nẵng, Việt Nam", rating: 3.5 },
+            bed_type: "king",
+            capacity: 2,
+            size: 35,
+            features: ["wifi", "aircon", "balcony"],
+            images: "https://placehold.co/600x400?text=Room+Image+1"
+        },
+        {
+            id: 2,
+            name: "Phòng Superior",
+            price_per_night: 1800000,
+            description: "Phòng Superior tiện nghi với không gian ấm cúng và đầy đủ tiện ích cơ bản.",
+            hotel: { id: 2, name: "Khách Sạn Hoàng Gia", location: "Hà Nội, Việt Nam", rating: 4.0 },
+            bed_type: "queen",
+            capacity: 2,
+            size: 30,
+            features: ["wifi", "breakfast", "tv"],
+            images: "https://placehold.co/600x400?text=Room+Image+2"
+        },
+        {
+            id: 3,
+            name: "Phòng Suite",
+            price_per_night: 3200000,
+            description: "Phòng Suite sang trọng với nội thất cao cấp và không gian rộng rãi.",
+            hotel: { id: 3, name: "Khách Sạn Sài Gòn", location: "TP. Hồ Chí Minh, Việt Nam", rating: 4.5 },
+            bed_type: "king",
+            capacity: 3,
+            size: 45,
+            features: ["wifi", "bathtub", "pool"],
+            images: "https://placehold.co/600x400?text=Room+Image+3"
+        }
+    ];
+
+    // Display search results
+    function displaySearchResults(results) {
+        const container = document.getElementById('resultsList');
+        container.innerHTML = '';
+        document.getElementById('resultsCount').textContent = results.length;
+
+        if (results.length === 0) {
+            document.getElementById('searchResults').classList.add('d-none');
+            document.getElementById('noResults').classList.remove('d-none');
+            return;
+        }
+
+        results.forEach(room => {
+            let ratingStars = '';
+            if (room.hotel.rating) {
+                const fullStars = Math.floor(room.hotel.rating);
+                const hasHalfStar = room.hotel.rating % 1 >= 0.5;
+                for (let i = 0; i < fullStars; i++) ratingStars += '<i class="fas fa-star text-warning"></i>';
+                if (hasHalfStar) ratingStars += '<i class="fas fa-star-half-alt text-warning"></i>';
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                for (let i = 0; i < emptyStars; i++) ratingStars += '<i class="far fa-star text-warning"></i>';
+            }
+
+            let featureBadges = '';
+            if (room.features && room.features.length > 0) {
+                const displayFeatures = room.features.slice(0, 3).map(f => ({
+                    wifi: "WiFi miễn phí",
+                    breakfast: "Bao gồm bữa sáng",
+                    aircon: "Máy điều hòa",
+                    bathtub: "Bồn tắm",
+                    balcony: "Ban công",
+                    pool: "Bể bơi",
+                    tv: "TV màn hình phẳng"
+                })[f]);
+                displayFeatures.forEach(feature => {
+                    featureBadges += `<span class="badge bg-light text-dark border me-1 mb-1">${feature}</span>`;
+                });
+            }
+
+            const roomCard = document.createElement('div');
+            roomCard.className = 'card border-0 shadow-sm mb-4 overflow-hidden';
+            roomCard.innerHTML = `
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <div class="ratio ratio-4x3 h-100">
+                            <img src="${room.images}" class="img-fluid rounded-start" alt="${room.name}" style="object-fit: cover;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h5 class="card-title mb-1">${room.name}</h5>
+                                    <p class="card-subtitle mb-2">
+                                        <a href="#" class="text-decoration-none text-dark">${room.hotel.name}</a>
+                                        <span class="text-muted ms-2"><i class="fas fa-map-marker-alt me-1"></i>${room.hotel.location}</span>
+                                    </p>
+                                </div>
+                                <div class="text-end">
+                                    <div class="h5 mb-0 text-primary">${room.price_per_night.toLocaleString()} đ</div>
+                                    <small class="text-muted">một đêm</small>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-3">
+                                <div class="me-3"><i class="fas fa-bed text-primary me-1"></i> ${room.bed_type === "king" ? "Giường King" : room.bed_type === "queen" ? "Giường Queen" : "Giường đơn"}</div>
+                                <div class="me-3"><i class="fas fa-user-friends text-primary me-1"></i> ${room.capacity} khách</div>
+                                <div><i class="fas fa-expand-arrows-alt text-primary me-1"></i> ${room.size} m²</div>
+                            </div>
+                            <p class="card-text mb-3">${room.description.substring(0, 120)}...</p>
+                            <div class="d-flex flex-wrap mb-3">${featureBadges}</div>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <div class="small">${ratingStars} <small class="text-muted ms-1">(${room.hotel.rating})</small></div>
+                                <div>
+                                    <a href="#" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                    <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-check-circle me-1"></i> Đặt ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(roomCard);
+        });
+
+        document.getElementById('searchResults').classList.remove('d-none');
+        document.getElementById('noResults').classList.add('d-none');
+    }
+
+    // Apply filters and sort
+    function applyFilters() {
+        let filteredRooms = [...roomData];
+
+        // Price filters
+        const priceFilters = [];
+        document.querySelectorAll('.price-filter:checked').forEach(checkbox => {
+            priceFilters.push(checkbox.value);
+        });
+        if (priceFilters.length > 0) {
+            filteredRooms = filteredRooms.filter(room => {
+                return priceFilters.some(range => {
+                    const [min, max] = range.split('-').map(Number);
+                    return room.price_per_night >= min && (max === 0 || room.price_per_night <= max);
+                });
+            });
+        }
+
+        // Feature filters
+        const featureFilters = [];
+        document.querySelectorAll('.feature-filter:checked').forEach(checkbox => {
+            featureFilters.push(checkbox.value);
+        });
+        if (featureFilters.length > 0) {
+            filteredRooms = filteredRooms.filter(room => {
+                return featureFilters.every(feature => room.features.includes(feature));
+            });
+        }
+
+        // Bed type filters
+        const bedFilters = [];
+        document.querySelectorAll('.bed-filter:checked').forEach(checkbox => {
+            bedFilters.push(checkbox.value);
+        });
+        if (bedFilters.length > 0) {
+            filteredRooms = filteredRooms.filter(room => bedFilters.includes(room.bed_type));
+        }
+
+        // Capacity filters
+        const capacityFilters = [];
+        document.querySelectorAll('.capacity-filter:checked').forEach(checkbox => {
+            capacityFilters.push(Number(checkbox.value === "5" ? 5 : checkbox.value));
+        });
+        if (capacityFilters.length > 0) {
+            const maxCapacity = Math.max(...capacityFilters);
+            filteredRooms = filteredRooms.filter(room => room.capacity >= maxCapacity);
+        }
+
+        // Sort results
+        const sortBy = document.getElementById('sortBy').value;
+        filteredRooms.sort((a, b) => {
+            if (sortBy === "price_asc") return a.price_per_night - b.price_per_night;
+            if (sortBy === "price_desc") return b.price_per_night - a.price_per_night;
+            if (sortBy === "rating_desc") return b.hotel.rating - a.hotel.rating;
+            if (sortBy === "name_asc") return a.name.localeCompare(b.name);
+            return 0;
+        });
+
+        displaySearchResults(filteredRooms);
+    }
+
+    // Reset filters
+    function resetFilters() {
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        document.getElementById('sortBy').value = 'price_asc';
+        displaySearchResults(roomData);
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        displaySearchResults(roomData);
+
+        document.getElementById('filterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            applyFilters();
+        });
+
+        document.getElementById('sortBy').addEventListener('change', applyFilters);
+
+        document.getElementById('resetFilters').addEventListener('click', resetFilters);
+    });
+    </script>
+</body>
+</html>

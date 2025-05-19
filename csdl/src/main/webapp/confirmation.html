@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận đặt phòng</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="custom.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-hotel me-2"></i>RBook
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i> Trang Chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">
+                            <i class="fas fa-search me-1"></i> Tìm Kiếm
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        <div class="mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Xác nhận đặt phòng</li>
+                </ol>
+            </nav>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="text-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Đang tải...</span>
+            </div>
+            <p class="mt-2">Đang tải thông tin đặt phòng...</p>
+        </div>
+
+        <!-- Confirmation Success -->
+        <div id="confirmationSuccess" class="d-none">
+            <div class="text-center mb-4">
+                <div class="display-1 text-success mb-3">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h1 class="h3 mb-2">Đặt phòng thành công!</h1>
+                <p class="text-muted mb-4">Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi. Chi tiết đặt phòng của bạn được liệt kê dưới đây.</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow mb-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h2 class="h5 mb-0">Chi tiết đặt phòng</h2>
+                                <span class="badge bg-success rounded-pill px-3 py-2">Xác nhận</span>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <div class="text-muted small mb-1">Mã đặt phòng</div>
+                                        <div class="fw-bold h5" id="bookingId"></div>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="flex-shrink-0 me-3" id="hotelThumbnail" style="width: 80px; height: 80px; background-size: cover; background-position: center; border-radius: 8px;"></div>
+                                        <div>
+                                            <div class="h6 mb-1" id="hotelName"></div>
+                                            <p class="mb-0 small" id="roomName"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <div class="text-muted small mb-1">Ngày đặt phòng</div>
+                                        <div class="fw-bold" id="bookingDate"></div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="text-muted small mb-1">Tên khách</div>
+                                        <div class="fw-bold" id="guestName"></div>
+                                    </div>
+                                    
+                                    <div class="mb-0">
+                                        <div class="text-muted small mb-1">Email</div>
+                                        <div class="fw-bold" id="guestEmail"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="h6 mb-3">Thời gian lưu trú</h3>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Nhận phòng:</span>
+                                        <span class="fw-bold" id="checkInDate"></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <span>Trả phòng:</span>
+                                        <span class="fw-bold" id="checkOutDate"></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Số đêm:</span>
+                                        <span class="fw-bold" id="nightsCount"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h3 class="h6 mb-3">Thông tin thanh toán</h3>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Phương thức:</span>
+                                        <span class="fw-bold">Thanh toán tại khách sạn</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Tình trạng:</span>
+                                        <span class="fw-bold text-success">Chưa thanh toán</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Tổng tiền:</span>
+                                        <span class="fw-bold" id="totalPrice"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">
+                                <i class="fas fa-info-circle fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="h6 mb-1">Thông tin quan trọng</h4>
+                                <p class="mb-0">Chúng tôi đã gửi email xác nhận đến địa chỉ email của bạn. Vui lòng mang theo mã đặt phòng và giấy tờ tùy thân khi nhận phòng.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="index.html" class="btn btn-outline-primary me-2">
+                            <i class="fas fa-home me-2"></i>Trở về trang chủ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="d-none">
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <span id="errorText">Không thể tải thông tin đặt phòng. Vui lòng thử lại sau.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>RBook</h5>
+                    <p>Trang web đặt phòng khách sạn hàng đầu.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Liên Hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i>info@rbook.com</li>
+                        <li><i class="fas fa-phone me-2"></i>+84 123 456 789</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Theo Dõi</h5>
+                    <div class="d-flex gap-3 fs-4">
+                        <a href="#" class="text-light"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 RBook. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading data (since we can't use backend)
+            setTimeout(function() {
+                // Get booking ID from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const bookingId = urlParams.get('booking_id') || '123456';
+                
+                // Mock booking data for static site
+                const bookingData = {
+                    id: bookingId,
+                    hotel_name: 'Hilton Hà Nội Opera',
+                    room_name: 'Phòng Deluxe, 1 giường King',
+                    booking_date: '07/05/2025',
+                    guest_name: 'Nguyễn Văn A',
+                    guest_email: 'nguyenvana@example.com',
+                    check_in_date: '10/05/2025',
+                    check_out_date: '12/05/2025'
+                };
+                
+                // Update UI with booking information
+                document.getElementById('bookingId').textContent = `#${bookingData.id}`;
+                document.getElementById('hotelName').textContent = bookingData.hotel_name;
+                document.getElementById('roomName').textContent = bookingData.room_name;
+                document.getElementById('bookingDate').textContent = bookingData.booking_date;
+                document.getElementById('guestName').textContent = bookingData.guest_name;
+                document.getElementById('guestEmail').textContent = bookingData.guest_email;
+                document.getElementById('checkInDate').textContent = bookingData.check_in_date;
+                document.getElementById('checkOutDate').textContent = bookingData.check_out_date;
+                
+                // Calculate nights and price
+                const nights = 2;
+                document.getElementById('nightsCount').textContent = `${nights} đêm`;
+                document.getElementById('totalPrice').textContent = `$${(nights * 120).toLocaleString()}`;
+                
+                // Set hotel thumbnail
+                document.getElementById('hotelThumbnail').style.backgroundImage = "url('https://placehold.co/600x400/3d4b66/white?text=Hotel')";
+                
+                // Hide loading, show confirmation
+                document.getElementById('loadingIndicator').classList.add('d-none');
+                document.getElementById('confirmationSuccess').classList.remove('d-none');
+            }, 1500); // Simulate 1.5s loading time
+        });
+    </script>
+</body>
+</html>

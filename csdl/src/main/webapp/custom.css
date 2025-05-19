@@ -1,0 +1,190 @@
+/* Custom styles for hotel booking website */
+
+/* General Styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Makes the footer stick to bottom */
+footer {
+    margin-top: auto;
+}
+
+/* Hero Banner Styles */
+.hero-banner {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.hero-banner .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Card hover effects */
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Custom star rating styles */
+.star-rating .fas.fa-star,
+.star-rating .far.fa-star,
+.star-rating .fas.fa-star-half-alt {
+    font-size: 0.9rem;
+}
+
+/* Hotel details page */
+#hotelImage {
+    position: relative;
+}
+
+#hotelImage::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    z-index: 1;
+}
+
+/* Room card hover effect */
+#roomsContainer .card:hover {
+    border-color: var(--bs-primary) !important;
+}
+
+/* Price emphasis */
+.fs-4.fw-bold {
+    color: var(--bs-primary);
+}
+
+/* Booking page styles */
+.booking-summary-card {
+    position: sticky;
+    top: 2rem;
+}
+
+/* Date picker styles */
+input[type="date"] {
+    cursor: pointer;
+}
+
+/* Custom badge styles */
+.badge.bg-success {
+    font-weight: normal;
+    padding: 0.4em 0.6em;
+}
+
+/* Amenities icons */
+.amenity-icon {
+    width: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    #hotelImage {
+        height: 250px !important;
+    }
+    
+    .booking-summary-card {
+        position: static;
+    }
+}
+
+/* Confirmation page styles */
+.booking-confirmed-icon {
+    font-size: 5rem;
+    color: var(--bs-success);
+}
+
+/* Custom breadcrumb styles */
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "\f105";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+/* Room details page styles */
+.room-carousel-thumbnail {
+    opacity: 0.6;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.room-carousel-thumbnail:hover,
+.room-carousel-thumbnail.active {
+    opacity: 1;
+    border: 2px solid var(--bs-primary);
+}
+
+/* Search page styles */
+.filter-sidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+/* Room card with detail button */
+.room-card .btn-details {
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.room-card:hover .btn-details {
+    opacity: 1;
+}
+
+/* Popular destinations */
+.destination-card {
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.destination-card img {
+    transition: all 0.6s ease;
+}
+
+.destination-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Feature badges */
+.feature-badge {
+    background-color: var(--bs-dark-bg-subtle);
+    color: var(--bs-light);
+    font-size: 0.75rem;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+/* Search box highlight */
+.search-highlight {
+    box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), 0.25);
+    border-color: var(--bs-primary);
+}

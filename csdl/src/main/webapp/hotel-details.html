@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="vi" data-bs-theme="dark">
+<head>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="custom.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-hotel me-2"></i>RBook
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-home me-1"></i> Trang Chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-search me-1"></i> Tìm Kiếm
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        <div class="mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Chi tiết khách sạn</li>
+                </ol>
+            </nav>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="text-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Đang tải...</span>
+            </div>
+            <p class="mt-2">Đang tải thông tin khách sạn...</p>
+        </div>
+
+        <!-- Hotel Details Container -->
+        <div id="hotelDetails" class="d-none">
+            <!-- Hotel Header -->
+            <div class="card border-0 shadow mb-4 position-relative overflow-hidden">
+                <div id="hotelImage" class="card-img-top" style="height: 350px; background-size: cover; background-position: center;"></div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 id="hotelName" class="card-title h3 mb-2"></h1>
+                            <p class="mb-2">
+                                <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                                <span id="hotelLocation"></span>
+                            </p>
+                            <div id="hotelRating" class="mb-2"></div>
+                            <p id="hotelPriceRange" class="mb-0"></p>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <a href="#roomsSection" class="btn btn-primary">
+                                <i class="fas fa-check-circle me-2"></i>Đặt phòng ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hotel Description -->
+            <div class="row mb-5 gx-4">
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <div class="card border-0 shadow">
+                        <div class="card-body p-4">
+                            <h2 class="h5 mb-3">Mô tả</h2>
+                            <p id="hotelDescription" class="mb-4"></p>
+                            
+                            <h2 class="h5 mb-3">Tiện nghi</h2>
+                            <div id="hotelAmenities" class="row mb-4">
+                                <!-- Amenities will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow sticky-top" style="top: 20px">
+                        <div class="card-body p-4">
+                            <h2 class="h5 mb-3">Tìm kiếm phòng</h2>
+                            <form id="bookingSearch">
+                                <div class="mb-3">
+                                    <label for="checkInDateDetail" class="form-label">Ngày nhận phòng</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        <input type="date" class="form-control" id="checkInDateDetail">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="checkOutDateDetail" class="form-label">Ngày trả phòng</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        <input type="date" class="form-control" id="checkOutDateDetail">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="guestsDetail" class="form-label">Số khách</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <select class="form-select" id="guestsDetail">
+                                            <option value="1">1 khách</option>
+                                            <option value="2" selected>2 khách</option>
+                                            <option value="3">3 khách</option>
+                                            <option value="4">4 khách</option>
+                                            <option value="5">5 khách</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2">
+                                    <i class="fas fa-search"></i> Tìm phòng
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rooms Section -->
+            <div id="roomsSection">
+                <h2 class="h4 mb-4">Phòng trống</h2>
+                <div id="roomsContainer">
+                    <!-- Room cards will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="d-none">
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <span id="errorText">Không thể tải thông tin khách sạn. Vui lòng thử lại sau.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>RBook</h5>
+                    <p>Trang web đặt phòng khách sạn hàng đầu.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Liên Hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i>info@rbook.com</li>
+                        <li><i class="fas fa-phone me-2"></i>+84 123 456 789</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Theo Dõi</h5>
+                    <div class="d-flex gap-3 fs-4">
+                        <a href="#" class="text-light"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 RBook. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Sample hotel data to replace API call
+        const sampleHotel = {
+            id: 123,
+            name: "Khách sạn Lighthouse Resort & Spa",
+            location: "Đà Nẵng, Việt Nam",
+            rating: 4.7,
+            price_range: "2,500,000 đ",
+            image_url: "https://placehold.co/1200x800?text=Lighthouse+Resort",
+            description: "Khách sạn Lighthouse Resort & Spa là nơi nghỉ dưỡng cao cấp tại Đà Nẵng với tầm nhìn tuyệt đẹp ra biển. Với kiến trúc hiện đại, nội thất sang trọng cùng dịch vụ chuyên nghiệp, khách sạn mang đến cho quý khách trải nghiệm thư giãn tuyệt vời. Được bao quanh bởi không gian xanh mát, hồ bơi vô cực và chỉ cách bãi biển vài phút đi bộ, đây là điểm đến lý tưởng cho kỳ nghỉ của bạn.",
+            amenities: [
+                "Wifi miễn phí", 
+                "Hồ bơi ngoài trời", 
+                "Spa", 
+                "Nhà hàng", 
+                "Quầy bar", 
+                "Phòng gym", 
+                "Đưa đón sân bay", 
+                "Bãi đậu xe", 
+                "Dịch vụ phòng 24/7",
+                "Phòng họp / Hội nghị",
+                "Dịch vụ giặt ủi",
+                "Máy lạnh"
+            ],
+            rooms: [
+                {
+                    id: 101,
+                    name: "Phòng Superior Hướng Biển",
+                    description: "Phòng Superior rộng rãi với tầm nhìn ra biển, thiết kế hiện đại và đầy đủ tiện nghi cao cấp.",
+                    bed_type: "1 giường king size",
+                    size: 32,
+                    capacity: 2,
+                    price_per_night: 2500000,
+                    available: true
+                },
+                {
+                    id: 102,
+                    name: "Phòng Deluxe Gia Đình",
+                    description: "Phòng Deluxe rộng rãi dành cho gia đình với không gian thoáng đãng và đầy đủ tiện nghi.",
+                    bed_type: "1 giường king size + 1 giường đơn",
+                    size: 45,
+                    capacity: 4,
+                    price_per_night: 3500000,
+                    available: true
+                },
+                {
+                    id: 103,
+                    name: "Suite Executive",
+                    description: "Suite Executive sang trọng với phòng khách riêng biệt, ban công rộng và tầm nhìn panorama ra biển.",
+                    bed_type: "1 giường king size",
+                    size: 60,
+                    capacity: 2,
+                    price_per_night: 5200000,
+                    available: false
+                },
+                {
+                    id: 104,
+                    name: "Phòng Standard Đôi",
+                    description: "Phòng tiêu chuẩn thoải mái với tất cả các tiện nghi cần thiết cho kỳ nghỉ của bạn.",
+                    bed_type: "2 giường đơn",
+                    size: 28,
+                    capacity: 2,
+                    price_per_night: 1800000,
+                    available: true
+                }
+            ]
+        };
+
+        /**
+         * Display hotel details in the UI
+         */
+        function displayHotelDetails(hotel) {
+            // Set hotel image
+            const hotelImage = document.getElementById('hotelImage');
+            hotelImage.style.backgroundImage = `url(${hotel.image_url || 'https://placehold.co/600x400?text=Hotel+Image'})`;
+            
+            // Set hotel name, location, etc.
+            document.getElementById('hotelName').textContent = hotel.name;
+            document.getElementById('hotelLocation').textContent = hotel.location;
+            
+            // Set hotel rating
+            const ratingElement = document.getElementById('hotelRating');
+            if (hotel.rating) {
+                let ratingHtml = '';
+                const fullStars = Math.floor(hotel.rating);
+                const hasHalfStar = hotel.rating % 1 >= 0.5;
+                
+                for (let i = 0; i < fullStars; i++) {
+                    ratingHtml += '<i class="fas fa-star text-warning"></i>';
+                }
+                
+                if (hasHalfStar) {
+                    ratingHtml += '<i class="fas fa-star-half-alt text-warning"></i>';
+                }
+                
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                for (let i = 0; i < emptyStars; i++) {
+                    ratingHtml += '<i class="far fa-star text-warning"></i>';
+                }
+                
+                ratingHtml += `<span class="ms-2 text-muted">${hotel.rating} sao</span>`;
+                ratingElement.innerHTML = ratingHtml;
+            }
+            
+            // Set price range
+            document.getElementById('hotelPriceRange').textContent = `Giá từ: ${hotel.price_range || '$'} / đêm`;
+            
+            // Set hotel description
+            document.getElementById('hotelDescription').textContent = hotel.description || 'Không có mô tả.';
+            
+            // Set hotel amenities
+            const amenitiesContainer = document.getElementById('hotelAmenities');
+            if (hotel.amenities && hotel.amenities.length > 0) {
+                let amenitiesHtml = '';
+                
+                // Map common amenities to icons
+                const amenityIcons = {
+                    'wifi': 'fas fa-wifi',
+                    'parking': 'fas fa-parking',
+                    'pool': 'fas fa-swimming-pool',
+                    'spa': 'fas fa-spa',
+                    'gym': 'fas fa-dumbbell',
+                    'restaurant': 'fas fa-utensils',
+                    'bar': 'fas fa-glass-martini-alt',
+                    'room service': 'fas fa-concierge-bell',
+                    'air conditioning': 'fas fa-wind',
+                    'tv': 'fas fa-tv',
+                    'coffee': 'fas fa-coffee',
+                    'breakfast': 'fas fa-coffee',
+                    'iron': 'fas fa-iron',
+                    'safety box': 'fas fa-lock',
+                    'hot tub': 'fas fa-hot-tub',
+                    'free breakfast': 'fas fa-coffee',
+                    'mini bar': 'fas fa-glass-whiskey',
+                    'non-smoking': 'fas fa-smoking-ban',
+                };
+                
+                hotel.amenities.forEach(amenity => {
+                    const amenityLower = amenity.toLowerCase().trim();
+                    let icon = 'fas fa-check';
+                    
+                    // Check if any word in the amenity matches our icon mapping
+                    for (const key in amenityIcons) {
+                        if (amenityLower.includes(key)) {
+                            icon = amenityIcons[key];
+                            break;
+                        }
+                    }
+                    
+                    amenitiesHtml += `
+                        <div class="col-md-4 col-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="${icon} text-primary me-2"></i>
+                                <span>${amenity}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                amenitiesContainer.innerHTML = amenitiesHtml;
+            } else {
+                amenitiesContainer.innerHTML = '<div class="col-12">Không có thông tin về tiện nghi.</div>';
+            }
+        }
+
+        /**
+         * Display rooms in the UI
+         */
+        function displayRooms(rooms, hotelId) {
+            const container = document.getElementById('roomsContainer');
+            container.innerHTML = ''; // Clear previous results
+            
+            // Get search parameters
+            const checkIn = document.getElementById('checkInDateDetail').value;
+            const checkOut = document.getElementById('checkOutDateDetail').value;
+            
+            rooms.forEach(room => {
+                // Create room card
+                const roomCard = document.createElement('div');
+                roomCard.className = 'card border-0 shadow-sm mb-4 room-card';
+                roomCard.innerHTML = `
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h3 class="h5 mb-2">${room.name}</h3>
+                                <div class="mb-3">
+                                    <span class="badge ${room.available ? 'bg-success' : 'bg-danger'} me-2">
+                                        ${room.available ? 'Còn trống' : 'Đã hết'}
+                                    </span>
+                                    <span class="text-muted small">
+                                        <i class="fas fa-user me-1"></i> Tối đa ${room.capacity} khách
+                                    </span>
+                                </div>
+                                <p class="mb-3 small">${room.description || 'Không có mô tả chi tiết.'}</p>
+                                
+                                <div class="d-flex flex-wrap mb-0 gap-2">
+                                    <div class="small px-2 py-1 bg-light rounded-1">
+                                        <i class="fas fa-bed text-primary me-1"></i> ${room.bed_type || 'Giường rộng'}
+                                    </div>
+                                    <div class="small px-2 py-1 bg-light rounded-1">
+                                        <i class="fas fa-expand-arrows-alt text-primary me-1"></i> ${room.size || '-'} m²
+                                    </div>
+                                    <div class="small px-2 py-1 bg-light rounded-1">
+                                        <i class="fas fa-wifi text-primary me-1"></i> Wifi miễn phí
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mt-3 mt-md-0 d-flex flex-column align-items-md-end justify-content-between">
+                                <div class="text-md-end mb-3 mb-md-0">
+                                    <div class="fs-4 fw-bold mb-1">${room.price_per_night.toLocaleString()} đ</div>
+                                    <div class="text-muted small">một đêm, đã bao gồm thuế</div>
+                                </div>
+                                
+                                <div class="d-flex flex-column gap-2 w-100 align-items-end">
+                                    <a href="#" class="btn btn-sm btn-outline-primary btn-details">
+                                        <i class="fas fa-info-circle me-1"></i> Chi tiết phòng
+                                    </a>
+                                    
+                                    ${room.available ? `
+                                        <a href="#" class="btn btn-primary book-room-btn" data-room-id="${room.id}">
+                                            <i class="fas fa-check-circle me-2"></i>Đặt phòng
+                                        </a>
+                                    ` : `
+                                        <button class="btn btn-secondary" disabled>
+                                            <i class="fas fa-times-circle me-2"></i>Đã hết phòng
+                                        </button>
+                                    `}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(roomCard);
+            });
+            
+            // Add event listeners to booking buttons
+            document.querySelectorAll('.book-room-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const roomId = this.getAttribute('data-room-id');
+                    alert(`Đã chọn đặt phòng với ID: ${roomId}. Trong ứng dụng thực tế, bạn sẽ được chuyển đến trang đặt phòng.`);
+                });
+            });
+            
+            // Add event listeners to room detail buttons
+            document.querySelectorAll('.btn-details').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Trong ứng dụng thực tế, bạn sẽ được chuyển đến trang chi tiết phòng.');
+                });
+            });
+        }
+
+        /**
+         * Initialize date pickers with default values (today and tomorrow)
+         */
+        function initDatePickers() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            // Format dates for input elements
+            const formatDate = (date) => {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            };
+            
+            // Set default values for date inputs
+            const checkInInput = document.getElementById('checkInDateDetail');
+            const checkOutInput = document.getElementById('checkOutDateDetail');
+            
+            if (checkInInput && !checkInInput.value) {
+                checkInInput.value = formatDate(today);
+            }
+            
+            if (checkOutInput && !checkOutInput.value) {
+                checkOutInput.value = formatDate(tomorrow);
+            }
+        }
+        
+        /**
+         * Main function to initialize the page
+         */
+        function initPage() {
+            // Initialize date pickers
+            initDatePickers();
+            
+            // Simulate loading for 1 second
+            setTimeout(() => {
+                // Hide loading indicator, show hotel details
+                document.getElementById('loadingIndicator').classList.add('d-none');
+                document.getElementById('hotelDetails').classList.remove('d-none');
+                
+                // Display hotel details
+                displayHotelDetails(sampleHotel);
+                
+                // Display rooms
+                displayRooms(sampleHotel.rooms, sampleHotel.id);
+            }, 1000);
+            
+            // Handle booking search form submission
+            document.getElementById('bookingSearch').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Scroll to rooms section
+                document.getElementById('roomsSection').scrollIntoView({behavior: 'smooth'});
+                
+                // In a real application, this would trigger a new search
+                // For this static version, just show a message
+                alert('Tìm kiếm phòng theo các tiêu chí đã chọn. Trong ứng dụng thực tế, danh sách phòng sẽ được cập nhật.');
+            });
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
